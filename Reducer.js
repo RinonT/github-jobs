@@ -1,10 +1,6 @@
 import React, {useEffect, useState, useReducer, createContext} from 'react'
  
-const API_URL = "https://jobs.github.com/positions.json?";
-const PROXI_URL = "https://cors-anywhere.herokuapp.com/";
-const endPoint = PROXI_URL + API_URL; 
-
-export default function Reducer() {
+export default function Reducer(proxiUrl, apiUrl) {
     const [state, dispatch] = useReducer((state, action) => {
         switch (action.type) {
             case "SET_JOBS": {
@@ -14,24 +10,31 @@ export default function Reducer() {
                     jobs: action.jobsData
                 }
             } 
+            case "SET_LOCATION_VALUE": {
+                return {
+                    ...state, location: action.location,
+                }
+            }
             default:
                  return state
         }
     }, {
         jobs: [],
         loading: false,
+        location: "",
     })
     // Fetch the first jobs to display 
-    const fetchJobs = async() => {
-        const response = await fetch(endPoint);
+   
+    async function fetchJobs() {
+        const response = await fetch(proxiUrl + apiUrl);
         const data = await response.json();
-         dispatch({type: "SET_JOBS", jobsData: data})
+        dispatch({type: "SET_JOBS", jobsData: data})
     }
 
     useEffect(() => {
-         fetchJobs();
-    }, [])
-   
+        fetchJobs();
+   }, [])
+
     return {state, dispatch};
 }
  

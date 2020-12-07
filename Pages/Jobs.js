@@ -5,8 +5,8 @@ import { Context } from '../GlobalContext';
 export default function Jobs() {
     const { state, dispatch } = useContext(Context);
     const jobsArr = state.jobs;
-    const { loading } = state;
-    console.log(jobsArr);
+    const { loading } = state; 
+    
     const loadingElement = loading && <h2>Loading...</h2>;
     const jobsElements = jobsArr.length == 0 ?
         loadingElement 

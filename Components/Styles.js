@@ -15,3 +15,9 @@ export const Job_Container = Styled.div`
         display: flex;
     }
 `;
+
+export const FormStyles = Styled.form`
+    display: grid;
+    
+
+`
