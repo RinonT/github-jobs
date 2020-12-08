@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useReducer, createContext } from 'react'
+import React, { useState, useReducer } from 'react'
 
-export default function Reducer(proxiUrl, apiUrl) {
+export default function Reducer() {
     const [state, dispatch] = useReducer((state, action) => {
         switch (action.type) {
             case "SET_JOBS": {
@@ -40,6 +40,7 @@ export default function Reducer(proxiUrl, apiUrl) {
         location: "",
         fulltime: false,
     })
+
     const [pageCount, setPageCount] = useState(0)
     const [perPage] = useState(5);
 

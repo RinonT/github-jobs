@@ -5,7 +5,7 @@ import { FormStyles } from './Styles';
 export default function SearchByLocationComponent() {
     const { state, dispatch, handleCheckbox} = useContext(Context);
      
-    const { location, fulltime } = state;
+    const { fulltime } = state;
 
     return (
         <FormStyles className="option_form">
