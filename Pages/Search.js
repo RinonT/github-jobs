@@ -1,9 +1,10 @@
 import React from 'react'
 import SearchFormComponent from '../Components/SearchFormComponent'
+ 
 
 export default function Search() {
     return (
-        <div>
+        <div className="search_background">
             <SearchFormComponent />
         </div>
     )

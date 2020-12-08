@@ -1,14 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { Header } from './Styles';
 
 export default function HeaderComponents() {
     return (
-        <header>
+        <Header>
             <div className="page_container header_container">
                 <h1>
-                    <span>GithBub</span>
+                    <span>GithBub </span>
                      Jobs
                      </h1>
             </div>
-        </header>
+        </Header>
     )
 }

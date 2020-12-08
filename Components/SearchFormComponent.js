@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import { Context } from '../GlobalContext'
+import { Context } from '../GlobalContext';
+import { SearchForm } from './Styles';
 
 export default function SearchFormComponent() {
     const {dispatch} = useContext(Context);
@@ -7,14 +8,15 @@ export default function SearchFormComponent() {
     function searchJobs(e) {
         e.preventDefault();
         const descriptionSearchInput = e.target.description;
+        dispatch({ type: "SET_JOBS", jobsData: [], loading: true})
         dispatch({type: "SET_DESCRIPTION", description: descriptionSearchInput.value})
         descriptionSearchInput.value = "";
     }
 
     return (
-        <form className="search_form" onSubmit={searchJobs}>
+        <SearchForm className="search_form" onSubmit={searchJobs}>
             <input type="text" name="description" placeholder="Title, companies, expertise or benefits" />
             <button>Search</button>
-        </form>
+        </SearchForm>
     )
 }
