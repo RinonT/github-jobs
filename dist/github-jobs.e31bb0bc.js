@@ -33873,8 +33873,15 @@ function Reducer(proxiUrl, apiUrl) {
       case "SET_JOBS":
         {
           return { ...state,
-            loading: true,
+            loading: action.loading,
             jobs: action.jobsData
+          };
+        }
+
+      case "SET_DESCRIPTION":
+        {
+          return { ...state,
+            description: action.description
           };
         }
 
@@ -33885,30 +33892,45 @@ function Reducer(proxiUrl, apiUrl) {
           };
         }
 
+      case "SET_FULLTIME_VALUE":
+        {
+          return { ...state,
+            fulltime: action.fulltime
+          };
+        }
+
+      case "SET_LOCATION_INPUT_VALUE":
+        {
+          return { ...state,
+            location: action.locationValue
+          };
+        }
+
       default:
         return state;
     }
   }, {
     jobs: [],
-    loading: false,
-    location: ""
+    loading: true,
+    description: "",
+    location: "",
+    fulltime: false
   }); // Fetch the first jobs to display 
 
-  async function fetchJobs() {
-    const response = await fetch(proxiUrl + apiUrl);
+  async function fetchJobs(endpoint) {
+    const response = await fetch(endpoint);
     const data = await response.json();
     dispatch({
       type: "SET_JOBS",
-      jobsData: data
+      jobsData: data,
+      loading: false
     });
   }
 
-  (0, _react.useEffect)(() => {
-    fetchJobs();
-  }, []);
   return {
     state,
-    dispatch
+    dispatch,
+    fetchJobs
   };
 }
 },{"react":"node_modules/react/index.js"}],"GlobalContext.js":[function(require,module,exports) {
@@ -33940,12 +33962,26 @@ function GlobalContext({
 }) {
   const {
     state,
-    dispatch
+    dispatch,
+    fetchJobs
   } = (0, _Reducer.default)(PROXI_URL, API_URL);
   let {
+    jobs,
+    loading,
+    description,
     location,
-    jobs
-  } = state;
+    fulltime
+  } = state; // Fetch all jobs
+
+  const allJobsEndpoint = PROXI_URL + API_URL;
+  (0, _react.useEffect)(() => {
+    fetchJobs(allJobsEndpoint);
+  }, []); // Get jobs by decription
+
+  const jobsByDescriptionEdpoint = allJobsEndpoint + `description=${description}`;
+  (0, _react.useEffect)(() => {
+    fetchJobs(jobsByDescriptionEdpoint);
+  }, [description]);
 
   function handleCheckbox(e) {
     if (e.target.checked) {
@@ -33953,7 +33989,9 @@ function GlobalContext({
         type: "SET_LOCATION_VALUE",
         location: `location=${e.target.id}`
       });
-    } else {
+    }
+
+    if (!e.target.checked) {
       dispatch({
         type: "SET_LOCATION_VALUE",
         location: ""
@@ -33961,19 +33999,19 @@ function GlobalContext({
     }
   }
 
-  async function fetchJobsByLocation() {
-    const response = await fetch(PROXI_URL + API_URL + location);
-    const data = await response.json();
-    console.log(data);
-    dispatch({
-      type: "SET_JOBS",
-      jobsData: data
-    });
-  }
+  console.log(jobs);
+  console.log(loading); // Second fetch for the seacrh by locations, state, zip and fulltime
 
   (0, _react.useEffect)(() => {
-    fetchJobsByLocation();
-  }, [location]);
+    let locationEndpoint = allJobsEndpoint + `full_time=${fulltime}` + "&" + location; // If a description has been searched
+
+    if (description !== "") {
+      locationEndpoint = jobsByDescriptionEdpoint + `full_time=${fulltime}` + "&" + location;
+    }
+
+    fetchJobs(locationEndpoint);
+  }, [location, fulltime]); // Third fetch for the description
+
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: {
       state,
@@ -36051,12 +36089,9 @@ function Jobs() {
     state,
     dispatch
   } = (0, _react.useContext)(_GlobalContext.Context);
-  const jobsArr = state.jobs;
-  const {
-    loading
-  } = state;
+  const jobsArr = state.jobs; // const { loading } = state; 
 
-  const loadingElement = loading && /*#__PURE__*/_react.default.createElement("h2", null, "Loading...");
+  const loadingElement = /*#__PURE__*/_react.default.createElement("h2", null, "Loading...");
 
   const jobsElements = jobsArr.length == 0 ? loadingElement : jobsArr.map(job => {
     return /*#__PURE__*/_react.default.createElement(_JobsComponents.default, _extends({
@@ -36085,20 +36120,44 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function SearchByLocationComponent() {
   const {
+    state,
+    dispatch,
     handleCheckbox
   } = (0, _react.useContext)(_GlobalContext.Context);
+  const {
+    location,
+    fulltime
+  } = state;
   return /*#__PURE__*/_react.default.createElement(_Styles.FormStyles, {
     className: "option_form"
   }, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "fulltime"
   }, /*#__PURE__*/_react.default.createElement("input", {
-    onChange: handleCheckbox,
+    onChange: e => {
+      if (e.target.checked) {
+        dispatch({
+          type: "SET_FULLTIME_VALUE",
+          fulltime: !fulltime
+        });
+      } else if (!e.target.checked) {
+        dispatch({
+          type: "SET_FULLTIME_VALUE",
+          fulltime: !fulltime
+        });
+      }
+    },
     type: "checkbox",
     id: "full-time"
   }), /*#__PURE__*/_react.default.createElement("span", null, "Full time")), /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "location"
   }, "Location:"), /*#__PURE__*/_react.default.createElement("input", {
     type: "text",
+    onChange: e => {
+      dispatch({
+        type: "SET_LOCATION_INPUT_VALUE",
+        locationValue: `location=${e.target.value}`
+      });
+    },
     placeholder: "City, state, zip code or country"
   }), /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "london"
@@ -36134,19 +36193,39 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = SearchFormComponent;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _GlobalContext = require("../GlobalContext");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function SearchFormComponent() {
+  const {
+    dispatch
+  } = (0, _react.useContext)(_GlobalContext.Context);
+
+  function searchJobs(e) {
+    e.preventDefault();
+    const descriptionSearchInput = e.target.description;
+    dispatch({
+      type: "SET_DESCRIPTION",
+      description: descriptionSearchInput.value
+    });
+    descriptionSearchInput.value = "";
+  }
+
   return /*#__PURE__*/_react.default.createElement("form", {
-    className: "search_form"
+    className: "search_form",
+    onSubmit: searchJobs
   }, /*#__PURE__*/_react.default.createElement("input", {
     type: "text",
+    name: "description",
     placeholder: "Title, companies, expertise or benefits"
   }), /*#__PURE__*/_react.default.createElement("button", null, "Search"));
 }
-},{"react":"node_modules/react/index.js"}],"Pages/Search.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../GlobalContext":"GlobalContext.js"}],"Pages/Search.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36348,7 +36427,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50477" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60710" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

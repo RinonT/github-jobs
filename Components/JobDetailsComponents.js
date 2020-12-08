@@ -35,7 +35,7 @@ export default function JobDetailsComponents() {
                 </div>
             </div>
             <div className="jobDetails_description">
-                {(jobDetails.description)}
+                {jobDetails.description}
             </div>
         </article>
         </section >  

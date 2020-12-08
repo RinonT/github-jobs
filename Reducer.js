@@ -1,40 +1,53 @@
-import React, {useEffect, useState, useReducer, createContext} from 'react'
- 
+import React, { useEffect, useState, useReducer, createContext } from 'react'
+
 export default function Reducer(proxiUrl, apiUrl) {
     const [state, dispatch] = useReducer((state, action) => {
         switch (action.type) {
             case "SET_JOBS": {
                 return {
                     ...state,
-                    loading: true,
+                    loading: action.loading,
                     jobs: action.jobsData
                 }
-            } 
+            }
+            case "SET_DESCRIPTION": {
+                return {
+                    ...state, description: action.description,
+                }
+            }
             case "SET_LOCATION_VALUE": {
                 return {
                     ...state, location: action.location,
                 }
             }
+            case "SET_FULLTIME_VALUE": {
+                return {
+                    ...state, fulltime: action.fulltime,
+                }
+            }
+            case "SET_LOCATION_INPUT_VALUE": {
+                return {
+                    ...state, location: action.locationValue,
+                }
+            }
             default:
-                 return state
+                return state
         }
     }, {
         jobs: [],
-        loading: false,
+        loading: true,
+        description: "",
         location: "",
+        fulltime: false,
     })
+     
     // Fetch the first jobs to display 
-   
-    async function fetchJobs() {
-        const response = await fetch(proxiUrl + apiUrl);
+    async function fetchJobs(endpoint) {
+        const response = await fetch(endpoint);
         const data = await response.json();
-        dispatch({type: "SET_JOBS", jobsData: data})
+        dispatch({ type: "SET_JOBS", jobsData: data, loading: false })
     }
 
-    useEffect(() => {
-        fetchJobs();
-   }, [])
-
-    return {state, dispatch};
+    return { state, dispatch, fetchJobs };
 }
- 
+

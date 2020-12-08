@@ -1,39 +1,61 @@
-import React, {useEffect, useState, useReducer, createContext, useContext} from 'react'
-import Reducer  from './Reducer';
+import React, { useEffect, createContext, useContext } from 'react'
+import Reducer from './Reducer';
 const Context = createContext();
 
 const API_URL = "https://jobs.github.com/positions.json?";
 const PROXI_URL = "https://cors-anywhere.herokuapp.com/";
+
+function GlobalContext({ children }) {
+  const { state, dispatch, fetchJobs } = Reducer(PROXI_URL, API_URL);
+  let {jobs, loading, description, location, fulltime } = state;
+
+  // Fetch all jobs
+  const allJobsEndpoint = PROXI_URL + API_URL;
+
+  useEffect(() => {
+    fetchJobs(allJobsEndpoint);
+  }, [])
+
+
+// Get jobs by decription
+const jobsByDescriptionEdpoint = allJobsEndpoint + `description=${description}`;
+  
+useEffect(() => {
+  fetchJobs(jobsByDescriptionEdpoint);
+}, [description])
  
-function GlobalContext({children}) {
-    const {state, dispatch } = Reducer(PROXI_URL, API_URL);
-
-   let  { location, jobs } = state;
-
-    function handleCheckbox(e) {
-         if (e.target.checked) {
-             dispatch({type:"SET_LOCATION_VALUE", location: `location=${e.target.id}`})
-         } else {
-            dispatch({type:"SET_LOCATION_VALUE", location: "" })
-         }
+  function handleCheckbox(e) {
+    if (e.target.checked) {
+      dispatch({ type: "SET_LOCATION_VALUE", location: `location=${e.target.id}` })
     }
- 
-  async function fetchJobsByLocation() {
-    const response = await fetch(PROXI_URL + API_URL + location);
-    const data = await response.json();
-    console.log(data)
-     dispatch({type: "SET_JOBS", jobsData: data})
+    if (!e.target.checked) {
+      dispatch({ type: "SET_LOCATION_VALUE", location: "" })
+    }
   }
+
+  console.log(jobs);
+  console.log(loading);
+
+
+  // Second fetch for the seacrh by locations, state, zip and fulltime
  
   useEffect(() => {
-    fetchJobsByLocation()
-  }, [location])
- 
-    return (
-        <Context.Provider value={{state, dispatch, handleCheckbox}}>
-            {children}
-        </Context.Provider>
-    )
+    let locationEndpoint = allJobsEndpoint + `full_time=${fulltime}` + "&" + location;
+    // If a description has been searched
+    if(description !== "") {
+      locationEndpoint = jobsByDescriptionEdpoint + `full_time=${fulltime}` + "&" + location;
+    }
+
+     fetchJobs(locationEndpoint)
+  }, [location, fulltime])
+
+// Third fetch for the description
+
+  return (
+    <Context.Provider value={{ state, dispatch, handleCheckbox }}>
+      {children}
+    </Context.Provider>
+  )
 }
 
-export {Context, GlobalContext};
+export { Context, GlobalContext };

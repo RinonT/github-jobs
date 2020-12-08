@@ -3,17 +3,27 @@ import { Context } from '../GlobalContext';
 import { FormStyles } from './Styles';
 
 export default function SearchByLocationComponent() {
-    const {handleCheckbox} = useContext(Context);
+    const { state, dispatch, handleCheckbox} = useContext(Context);
      
-    
+    const { location, fulltime } = state;
+
     return (
         <FormStyles className="option_form">
             <label htmlFor="fulltime">
-                <input onChange={handleCheckbox} type="checkbox" id="full-time" />
+                <input onChange={(e) => {
+                   if(e.target.checked){ 
+                    dispatch({type:"SET_FULLTIME_VALUE", fulltime: !fulltime})
+                   } else if(!e.target.checked) {
+                    dispatch({type:"SET_FULLTIME_VALUE", fulltime: !fulltime})
+                   }
+                }} 
+                type="checkbox" id="full-time" />
                 <span>Full time</span>
             </label>
             <label htmlFor="location">Location:</label>
-            <input type="text" placeholder="City, state, zip code or country"/>
+            <input type="text"onChange={(e) => {
+                dispatch({type:"SET_LOCATION_INPUT_VALUE", locationValue:`location=${e.target.value}`})
+            }} placeholder="City, state, zip code or country"/>
             <label htmlFor="london">
                 <input onChange={handleCheckbox} type="checkbox"  id="london" />
                 <span>London</span>
