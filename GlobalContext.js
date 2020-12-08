@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useContext } from 'react'
+import React, { useEffect, useState, createContext, useContext } from 'react'
 import Reducer from './Reducer';
 const Context = createContext();
 
@@ -6,15 +6,18 @@ const API_URL = "https://jobs.github.com/positions.json?";
 const PROXI_URL = "https://cors-anywhere.herokuapp.com/";
 
 function GlobalContext({ children }) {
-  const { state, dispatch, fetchJobs } = Reducer(PROXI_URL, API_URL);
+  const { state, dispatch, perPage, pageCount, setPageCount, fetchJobs } = Reducer(PROXI_URL, API_URL);
   let {jobs, loading, description, location, fulltime } = state;
+  const [offset, setOffset] = useState(0);
+  
+ 
 
   // Fetch all jobs
   const allJobsEndpoint = PROXI_URL + API_URL;
 
   useEffect(() => {
     fetchJobs(allJobsEndpoint);
-  }, [])
+  }, [offset])
 
 
 // Get jobs by decription
@@ -52,7 +55,7 @@ useEffect(() => {
 // Third fetch for the description
 
   return (
-    <Context.Provider value={{ state, dispatch, handleCheckbox }}>
+    <Context.Provider value={{ state, dispatch, handleCheckbox, pageCount, setPageCount, perPage, offset, setOffset }}>
       {children}
     </Context.Provider>
   )

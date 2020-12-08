@@ -40,14 +40,17 @@ export default function Reducer(proxiUrl, apiUrl) {
         location: "",
         fulltime: false,
     })
-     
+    const [pageCount, setPageCount] = useState(0)
+    const [perPage] = useState(5);
+
     // Fetch the first jobs to display 
     async function fetchJobs(endpoint) {
         const response = await fetch(endpoint);
         const data = await response.json();
+        setPageCount(Math.ceil(data.length / perPage))
         dispatch({ type: "SET_JOBS", jobsData: data, loading: false })
     }
 
-    return { state, dispatch, fetchJobs };
+    return { state, dispatch, perPage, pageCount, setPageCount, fetchJobs };
 }
 
