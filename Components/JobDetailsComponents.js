@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom';
 import { Context } from '../GlobalContext';
+import { JobDetailArticle, Article } from './Styles';
 
 export default function JobDetailsComponents() {
     const { state, dispatch } = useContext(Context);
@@ -12,7 +13,7 @@ export default function JobDetailsComponents() {
     console.log(jobDetails);
     return (
     <section className = "jobDetails_section">
-            <article className="jobDetails_article" >
+        <Article className="jobDetails_article" >
             <Link className="jobDetails_link" to='/'>
             Back to search
                  </Link>
@@ -20,14 +21,14 @@ export default function JobDetailsComponents() {
                 <p className="jobDetails_paragraph">
                     {jobDetails.how_to_apply}
                 </p>
-            </article>
-        <article className="jobDetails_article">
+        </Article>
+        <JobDetailArticle className="jobDetails_article">
             <header className="jobDetails_article__header">
                 <h2 className="jobDetails__article_heading">{jobDetails.title}</h2>
-                <p className="jobDetails__paragraph">{jobDetails.type}</p>
-                <p className="jobDetails__paragraph">{jobDetails.created_at}</p>
+                <p className="jobDetails__paragraph job_type">{jobDetails.type}</p>
+                <span className="jobDetails__paragraph job_date">{jobDetails.created_at}</span>
             </header>
-            <div>
+            <div className="job_info_container">
                 <img src={jobDetails.company_logo} />
                 <div className="job_info">
                     <p className="jobDetails_paragraph job_company">{jobDetails.company}</p>
@@ -37,7 +38,7 @@ export default function JobDetailsComponents() {
             <div className="jobDetails_description">
                 {jobDetails.description}
             </div>
-        </article>
+        </JobDetailArticle>
         </section >  
     )
 }

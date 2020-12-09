@@ -35969,7 +35969,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SearchForm = exports.FormStyles = exports.Job_Container = exports.Header = void 0;
+exports.JobDetailArticle = exports.Article = exports.SearchForm = exports.FormStyles = exports.Job_Container = exports.Header = void 0;
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
@@ -36033,7 +36033,7 @@ const Job_Container = _styledComponents.default.div`
         font-size: 12px;
         line-height: 14px; 
         color: #334680;
-        margin-top: 16px;
+        margin-top: 16px; 
         padding: 4px;
         max-width: 25%;
     }
@@ -36072,14 +36072,14 @@ const FormStyles = _styledComponents.default.form`
 `;
 exports.FormStyles = FormStyles;
 const SearchForm = _styledComponents.default.form`
-background-color: #FFFFFF;
-box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-border-radius: 4px;
-margin-left: 16px;
-margin-right: 16px;
-padding: 6px;
-display: flex;
-justify-content: space-between;
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 6px;
+    display: flex;
+    justify-content: space-between;
 
      input {
          flex-basis: 70%;
@@ -36096,6 +36096,76 @@ justify-content: space-between;
      }
 `;
 exports.SearchForm = SearchForm;
+const Article = _styledComponents.default.article`
+     h2 {
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 21px;
+        /* identical to box height */
+        text-transform: uppercase;
+        color: #B9BDCF;
+        margin-bottom: 16px;
+     }
+
+     p {
+        font-family: "Poppins";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 21px;
+        color: #334680;
+        margin-bottom: 32px;
+     }
+
+     a {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 21px;
+        color: #1E86FF;
+        display: block;
+        margin-bottom: 36px;
+     }
+`;
+exports.Article = Article;
+const JobDetailArticle = _styledComponents.default.article`
+    h2 {
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 28px;
+        color: #334680;
+        margin-top: 32px;
+        margin-bottom: 10px;
+    }
+
+    .job_type {
+        border: 1px solid #334680;
+        box-sizing: border-box;
+        border-radius: 4px;
+        max-width: 25%;
+        padding: 4px;
+        margin-bottom: 10px;
+    }
+
+    span {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px; 
+        color: #B7BCCE;
+    }
+
+    .job_info_container {
+        display: flex;
+        column-gap: 32px;
+        margin-top: 32px;
+        margin-bottom: 32px;
+    }
+
+    img {
+        width: 62px;
+        height: 62px;
+    }
+`;
+exports.JobDetailArticle = JobDetailArticle;
 },{"styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"Components/HeaderComponents.js":[function(require,module,exports) {
 "use strict";
 
@@ -36458,6 +36528,8 @@ var _reactRouterDom = require("react-router-dom");
 
 var _GlobalContext = require("../GlobalContext");
 
+var _Styles = require("./Styles");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -36477,7 +36549,7 @@ function JobDetailsComponents() {
   console.log(jobDetails);
   return /*#__PURE__*/_react.default.createElement("section", {
     className: "jobDetails_section"
-  }, /*#__PURE__*/_react.default.createElement("article", {
+  }, /*#__PURE__*/_react.default.createElement(_Styles.Article, {
     className: "jobDetails_article"
   }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     className: "jobDetails_link",
@@ -36486,17 +36558,19 @@ function JobDetailsComponents() {
     className: "jobDetails_heading"
   }, "How to apply"), /*#__PURE__*/_react.default.createElement("p", {
     className: "jobDetails_paragraph"
-  }, jobDetails.how_to_apply)), /*#__PURE__*/_react.default.createElement("article", {
+  }, jobDetails.how_to_apply)), /*#__PURE__*/_react.default.createElement(_Styles.JobDetailArticle, {
     className: "jobDetails_article"
   }, /*#__PURE__*/_react.default.createElement("header", {
     className: "jobDetails_article__header"
   }, /*#__PURE__*/_react.default.createElement("h2", {
     className: "jobDetails__article_heading"
   }, jobDetails.title), /*#__PURE__*/_react.default.createElement("p", {
-    className: "jobDetails__paragraph"
-  }, jobDetails.type), /*#__PURE__*/_react.default.createElement("p", {
-    className: "jobDetails__paragraph"
-  }, jobDetails.created_at)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
+    className: "jobDetails__paragraph job_type"
+  }, jobDetails.type), /*#__PURE__*/_react.default.createElement("span", {
+    className: "jobDetails__paragraph job_date"
+  }, jobDetails.created_at)), /*#__PURE__*/_react.default.createElement("div", {
+    className: "job_info_container"
+  }, /*#__PURE__*/_react.default.createElement("img", {
     src: jobDetails.company_logo
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: "job_info"
@@ -36508,7 +36582,7 @@ function JobDetailsComponents() {
     className: "jobDetails_description"
   }, jobDetails.description)));
 }
-},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../GlobalContext":"GlobalContext.js"}],"Pages/JobDetails.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../GlobalContext":"GlobalContext.js","./Styles":"Components/Styles.js"}],"Pages/JobDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
