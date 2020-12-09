@@ -73,6 +73,11 @@ pagination {
     border-radius: 8px;
 }
 
+
+p.job_location {
+    margin-right: 12px;
+}
+
 img {
     width: 100%;
 }
