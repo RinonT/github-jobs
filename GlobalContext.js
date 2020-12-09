@@ -11,18 +11,26 @@ function GlobalContext({ children }) {
   const [offset, setOffset] = useState(0);
   
   // Fetch all jobs
-  const allJobsEndpoint = PROXI_URL + API_URL;
+  let allJobsEndpoint = PROXI_URL + API_URL;
 
-  useEffect(() => {
-    fetchJobs(allJobsEndpoint);
-  }, [offset])
+if(description !== "" ) {
+  allJobsEndpoint = allJobsEndpoint + `description=${description}`;
+} else{
+  allJobsEndpoint = PROXI_URL + API_URL;
+} 
 
-// Get jobs by decription/ fetch for the description
-const jobsByDescriptionEdpoint = allJobsEndpoint + `description=${description}`;
-  
+ if(description !== "" && location !== "") {
+  allJobsEndpoint = PROXI_URL + API_URL + `description=${description}` + "&" + `full_time=${fulltime}` + "&" + location;
+} 
+ if(description === "" && location !== "") {
+  allJobsEndpoint = PROXI_URL + API_URL + `full_time=${fulltime}` + "&" + location;
+} 
+
+
 useEffect(() => {
-  fetchJobs(jobsByDescriptionEdpoint);
-}, [description])
+  fetchJobs(allJobsEndpoint);
+}, [offset, description, location, fulltime])
+
  
   function handleCheckbox(e) {
     if (e.target.checked) {
@@ -33,21 +41,8 @@ useEffect(() => {
       dispatch({ type: "SET_JOBS", jobsData: [], loading: true})
     }
   }
-
-  console.log(jobs);
-  console.log(loading);
-  // Third fetch for the seacrh by locations, state, zip and fulltime
-  useEffect(() => {
-    let locationEndpoint = allJobsEndpoint + `full_time=${fulltime}` + "&" + location;
-    // If a description has been searched
-    if(description !== "") {
-      locationEndpoint = jobsByDescriptionEdpoint + `full_time=${fulltime}` + "&" + location;
-    }
-
-     fetchJobs(locationEndpoint)
-  }, [location, fulltime])
-
-
+ 
+   
   return (
     <Context.Provider value={{ state, dispatch, handleCheckbox, pageCount, setPageCount, perPage, offset, setOffset }}>
       {children}

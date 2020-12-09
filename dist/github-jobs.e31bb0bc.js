@@ -33983,15 +33983,25 @@ function GlobalContext({
   } = state;
   const [offset, setOffset] = (0, _react.useState)(0); // Fetch all jobs
 
-  const allJobsEndpoint = PROXI_URL + API_URL;
+  let allJobsEndpoint = PROXI_URL + API_URL;
+
+  if (description !== "") {
+    allJobsEndpoint = allJobsEndpoint + `description=${description}`;
+  } else {
+    allJobsEndpoint = PROXI_URL + API_URL;
+  }
+
+  if (description !== "" && location !== "") {
+    allJobsEndpoint = PROXI_URL + API_URL + `description=${description}` + "&" + `full_time=${fulltime}` + "&" + location;
+  }
+
+  if (description === "" && location !== "") {
+    allJobsEndpoint = PROXI_URL + API_URL + `full_time=${fulltime}` + "&" + location;
+  }
+
   (0, _react.useEffect)(() => {
     fetchJobs(allJobsEndpoint);
-  }, [offset]); // Get jobs by decription/ fetch for the description
-
-  const jobsByDescriptionEdpoint = allJobsEndpoint + `description=${description}`;
-  (0, _react.useEffect)(() => {
-    fetchJobs(jobsByDescriptionEdpoint);
-  }, [description]);
+  }, [offset, description, location, fulltime]);
 
   function handleCheckbox(e) {
     if (e.target.checked) {
@@ -34017,18 +34027,6 @@ function GlobalContext({
     }
   }
 
-  console.log(jobs);
-  console.log(loading); // Third fetch for the seacrh by locations, state, zip and fulltime
-
-  (0, _react.useEffect)(() => {
-    let locationEndpoint = allJobsEndpoint + `full_time=${fulltime}` + "&" + location; // If a description has been searched
-
-    if (description !== "") {
-      locationEndpoint = jobsByDescriptionEdpoint + `full_time=${fulltime}` + "&" + location;
-    }
-
-    fetchJobs(locationEndpoint);
-  }, [location, fulltime]);
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: {
       state,
@@ -36546,7 +36544,6 @@ function JobDetailsComponents() {
     jobs
   } = state;
   const jobDetails = jobs.length > 0 && jobs.find(job => job.id === jobId);
-  console.log(jobDetails);
   return /*#__PURE__*/_react.default.createElement("section", {
     className: "jobDetails_section"
   }, /*#__PURE__*/_react.default.createElement(_Styles.Article, {
@@ -36676,7 +36673,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49777" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49973" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom';
 import { Context } from '../GlobalContext';
-import { JobDetailArticle, Article } from './Styles';
+import { Article, JobDetailArticle} from './Styles';
 
 export default function JobDetailsComponents() {
     const { state, dispatch } = useContext(Context);
@@ -10,7 +10,7 @@ export default function JobDetailsComponents() {
     const { jobs } = state;
 
     const jobDetails = jobs.length > 0 && jobs.find(job => job.id === jobId);
-    console.log(jobDetails);
+    
     return (
     <section className = "jobDetails_section">
         <Article className="jobDetails_article" >
@@ -36,7 +36,7 @@ export default function JobDetailsComponents() {
                 </div>
             </div>
             <div className="jobDetails_description">
-                {jobDetails.description}
+               {jobDetails.description}
             </div>
         </JobDetailArticle>
         </section >  
