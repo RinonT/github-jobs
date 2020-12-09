@@ -18,8 +18,8 @@ const discussedOnDate = new Date(Number(date1));
  const Difference_In_Time = date4.getTime() - date3.getTime(); 
    
  // To calculate the no. of days between two dates 
- const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
-   console.log(Difference_In_Days)
+ const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24) + ` days ago`; 
+   
     return (
         <section className="page_section">
             <Link to={`/${id}`}>

@@ -5,21 +5,21 @@ import { Context } from '../GlobalContext';
 import { Article, JobDetailArticle} from './Styles';
 
 export default function JobDetailsComponents() {
-    const { state, dispatch } = useContext(Context);
+    const { state } = useContext(Context);
     const { jobId } = useParams();
     const { jobs } = state;
 
     const jobDetails = jobs.length > 0 && jobs.find(job => job.id === jobId);
-    
-    return (
-    <section className = "jobDetails_section">
+   
+    return ( 
+     <section className = "jobDetails_section">
         <Article className="jobDetails_article" >
             <Link className="jobDetails_link" to='/'>
             ← Back to search
             </Link>
             <h2 className="jobDetails_heading">How to apply</h2>
-            <p className="jobDetails_paragraph">
-                {jobDetails.how_to_apply}
+            <p className="jobDetails_paragraph" id="apply">
+                {jobDetails.how_to_apply} 
             </p>
         </Article>
         <JobDetailArticle className="jobDetails_article">
@@ -36,9 +36,9 @@ export default function JobDetailsComponents() {
                 </div>
             </div>
             <div className="jobDetails_description">
-               {jobDetails.description}{" "}
+               {jobDetails.description}
             </div>
         </JobDetailArticle>
-        </section >  
+        </section>
     )
 }

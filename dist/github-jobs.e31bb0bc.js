@@ -36245,8 +36245,7 @@ function JobsComponents({
 
   const Difference_In_Time = date4.getTime() - date3.getTime(); // To calculate the no. of days between two dates 
 
-  const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  console.log(Difference_In_Days);
+  const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24) + ` days ago`;
   return /*#__PURE__*/_react.default.createElement("section", {
     className: "page_section"
   }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
@@ -36552,8 +36551,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function JobDetailsComponents() {
   const {
-    state,
-    dispatch
+    state
   } = (0, _react.useContext)(_GlobalContext.Context);
   const {
     jobId
@@ -36572,7 +36570,8 @@ function JobDetailsComponents() {
   }, "\u2190 Back to search"), /*#__PURE__*/_react.default.createElement("h2", {
     className: "jobDetails_heading"
   }, "How to apply"), /*#__PURE__*/_react.default.createElement("p", {
-    className: "jobDetails_paragraph"
+    className: "jobDetails_paragraph",
+    id: "apply"
   }, jobDetails.how_to_apply)), /*#__PURE__*/_react.default.createElement(_Styles.JobDetailArticle, {
     className: "jobDetails_article"
   }, /*#__PURE__*/_react.default.createElement("header", {
@@ -36595,7 +36594,7 @@ function JobDetailsComponents() {
     className: "job_location"
   }, jobDetails.location))), /*#__PURE__*/_react.default.createElement("div", {
     className: "jobDetails_description"
-  }, jobDetails.description, " ")));
+  }, jobDetails.description)));
 }
 },{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../GlobalContext":"GlobalContext.js","./Styles":"Components/Styles.js"}],"Pages/JobDetails.js":[function(require,module,exports) {
 "use strict";

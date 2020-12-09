@@ -87,11 +87,11 @@ I have solidified my knowledge about useReducer, using a few different fetches i
 
  - I didn't use any filter method but instead, I did different fetches for the searching jobs, which you can see in the *Reducer* and *GlobalContext* files.
 
--   If I had more time, I would make my code much cleaner and spend more time on the styles. Finishing what I couldn't finish.
+-   If I had more time, I would make my code much cleaner and spend more time on the styles. Finishing what I couldn't finish. I would refactor my code and style it much better.
 
 - What I have learned is still about using useEffect, using using reducer and also, manupilating api urls. But something new? Pagination in react that is amazing.
 
-- The most challenging part for me is first waiting for the data from the serve which is very slow. Working with the html in the description's value.
+- The most challenging part for me is first waiting for the data from the serve which is very slow. Working with the html in the description's value. Getting the date distance.
 
 - Comment:
 This is a delicious project. Challenging but enjoyable. Thank you very much.
