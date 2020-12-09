@@ -6,8 +6,9 @@ import { Context } from '../GlobalContext';
 export default function Jobs() {
     const { state, dispatch, perPage, pageCount, offset, setOffset } = useContext(Context);
     const jobsArr = state.jobs;
-    const { loading } = state;  
-    const loadingElement = loading ? <h2>Loading...</h2> : <h2>No result found</h2>;
+    const { loading, paginationHidden } = state;  
+ 
+    const loadingElement = loading ? <h2>Loading...</h2> : <h2>No result found..., You may want to reload or try a different search</h2>;
     const jobsElements = jobsArr.length == 0 ?
         loadingElement
         :
@@ -18,17 +19,16 @@ export default function Jobs() {
         })
 
     const handlePageClick = (e) => {
-        const selectedPage = e.selected;
-        console.log("selectedPage");
+        const selectedPage = e.selected; 
         setOffset(selectedPage + 1)
     };
-
 
 
     return (
         <div>
             {jobsElements}
-            
+            {
+            paginationHidden == false &&
             <ReactPaginate
                 previousLabel={"prev"}
                 nextLabel={"next"}
@@ -40,7 +40,9 @@ export default function Jobs() {
                 onPageChange={handlePageClick}
                 containerClassName={"pagination"}
                 subContainerClassName={"pages pagination"}
-                activeClassName={"active"} />
+                activeClassName={"active"}
+            />
+            }
         </div >
     )
 }

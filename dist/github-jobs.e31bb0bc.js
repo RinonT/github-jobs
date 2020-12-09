@@ -33874,7 +33874,8 @@ function Reducer() {
         {
           return { ...state,
             loading: action.loading,
-            jobs: action.jobsData
+            jobs: action.jobsData,
+            paginationHidden: action.isPaginationHidden
           };
         }
 
@@ -33912,6 +33913,7 @@ function Reducer() {
   }, {
     jobs: [],
     loading: true,
+    paginationHidden: true,
     description: "",
     location: "",
     fulltime: false
@@ -33926,7 +33928,8 @@ function Reducer() {
     dispatch({
       type: "SET_JOBS",
       jobsData: data,
-      loading: false
+      loading: false,
+      isPaginationHidden: false
     });
   }
 
@@ -33981,9 +33984,10 @@ function GlobalContext({
     location,
     fulltime
   } = state;
-  const [offset, setOffset] = (0, _react.useState)(0); // Fetch all jobs
+  const [offset, setOffset] = (0, _react.useState)(0); // Fetch jobs
 
-  let allJobsEndpoint = PROXI_URL + API_URL;
+  let allJobsEndpoint = PROXI_URL + API_URL; // Change the endpoint depending on the search.
+  //  At the begining, it will fetch all works
 
   if (description !== "") {
     allJobsEndpoint = allJobsEndpoint + `description=${description}`;
@@ -35989,6 +35993,7 @@ const Header = _styledComponents.default.header`
 `;
 exports.Header = Header;
 const Job_Container = _styledComponents.default.div`
+    display: flex;
     padding: 16px;
     margin-bottom: 16px;
     background: #FFFFFF;
@@ -35997,7 +36002,7 @@ const Job_Container = _styledComponents.default.div`
 
     .section_container__div {
         display: grid;
-        grid-template-columns: auto 75%;
+        grid-template-columns: 30% 67%;
         grid-gap: 32px;
     }
 
@@ -36033,7 +36038,7 @@ const Job_Container = _styledComponents.default.div`
         color: #334680;
         margin-top: 16px; 
         padding: 4px;
-        max-width: 25%;
+        max-width: 69px;
     }
 
     .job_info {
@@ -36230,6 +36235,18 @@ function JobsComponents({
   location,
   created_at
 }) {
+  const offerDate = new Date(created_at).toLocaleString();
+  const date1 = Date.parse(created_at);
+  const date2 = Date.parse(new Date());
+  const discussedOnDate = new Date(Number(date1));
+  const today = new Date(Number(date2));
+  const date3 = new Date(discussedOnDate.toLocaleDateString());
+  const date4 = new Date(today.toLocaleDateString()); // To calculate the time difference of two dates 
+
+  const Difference_In_Time = date4.getTime() - date3.getTime(); // To calculate the no. of days between two dates 
+
+  const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  console.log(Difference_In_Days);
   return /*#__PURE__*/_react.default.createElement("section", {
     className: "page_section"
   }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
@@ -36258,7 +36275,7 @@ function JobsComponents({
     alt: "jobs"
   }), /*#__PURE__*/_react.default.createElement("span", {
     className: "job_created"
-  }, created_at))))));
+  }, Difference_In_Days))))));
 }
 },{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./Styles":"Components/Styles.js"}],"Pages/Jobs.js":[function(require,module,exports) {
 "use strict";
@@ -36295,9 +36312,10 @@ function Jobs() {
   } = (0, _react.useContext)(_GlobalContext.Context);
   const jobsArr = state.jobs;
   const {
-    loading
+    loading,
+    paginationHidden
   } = state;
-  const loadingElement = loading ? /*#__PURE__*/_react.default.createElement("h2", null, "Loading...") : /*#__PURE__*/_react.default.createElement("h2", null, "No result found");
+  const loadingElement = loading ? /*#__PURE__*/_react.default.createElement("h2", null, "Loading...") : /*#__PURE__*/_react.default.createElement("h2", null, "No result found..., You may want to reload or try a different search");
   const jobsElements = jobsArr.length == 0 ? loadingElement : jobsArr.slice(offset, offset + perPage).map(job => {
     return /*#__PURE__*/_react.default.createElement(_JobsComponents.default, _extends({
       key: job.id
@@ -36306,11 +36324,10 @@ function Jobs() {
 
   const handlePageClick = e => {
     const selectedPage = e.selected;
-    console.log("selectedPage");
     setOffset(selectedPage + 1);
   };
 
-  return /*#__PURE__*/_react.default.createElement("div", null, jobsElements, /*#__PURE__*/_react.default.createElement(_reactPaginate.default, {
+  return /*#__PURE__*/_react.default.createElement("div", null, jobsElements, paginationHidden == false && /*#__PURE__*/_react.default.createElement(_reactPaginate.default, {
     previousLabel: "prev",
     nextLabel: "next",
     breakLabel: "...",
@@ -36419,7 +36436,7 @@ function SearchByLocationComponent() {
     id: "berlin"
   }), /*#__PURE__*/_react.default.createElement("span", null, "Berlin")));
 }
-},{"react":"node_modules/react/index.js","../GlobalContext":"GlobalContext.js","./Styles":"Components/Styles.js"}],"Components/SearchFormComponent.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../GlobalContext":"GlobalContext.js","./Styles":"Components/Styles.js"}],"Components/SearchByKeywordComponent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36454,7 +36471,6 @@ function SearchFormComponent() {
       type: "SET_DESCRIPTION",
       description: descriptionSearchInput.value
     });
-    descriptionSearchInput.value = "";
   }
 
   return /*#__PURE__*/_react.default.createElement(_Styles.SearchForm, {
@@ -36476,16 +36492,16 @@ exports.default = Search;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _SearchFormComponent = _interopRequireDefault(require("../Components/SearchFormComponent"));
+var _SearchByKeywordComponent = _interopRequireDefault(require("../Components/SearchByKeywordComponent"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Search() {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "search_background"
-  }, /*#__PURE__*/_react.default.createElement(_SearchFormComponent.default, null));
+  }, /*#__PURE__*/_react.default.createElement(_SearchByKeywordComponent.default, null));
 }
-},{"react":"node_modules/react/index.js","../Components/SearchFormComponent":"Components/SearchFormComponent.js"}],"Pages/Homepage.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../Components/SearchByKeywordComponent":"Components/SearchByKeywordComponent.js"}],"Pages/Homepage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36508,7 +36524,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function HomepageComponent() {
   return /*#__PURE__*/_react.default.createElement("section", {
     className: "page_section homepage_section"
-  }, /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_Search.default, null), /*#__PURE__*/_react.default.createElement(_SearchByLocationComponent.default, null), /*#__PURE__*/_react.default.createElement(_Jobs.default, null));
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "homepage_section_container"
+  }, /*#__PURE__*/_react.default.createElement(_Search.default, null), /*#__PURE__*/_react.default.createElement(_SearchByLocationComponent.default, null), /*#__PURE__*/_react.default.createElement(_Jobs.default, null)));
 }
 },{"react":"node_modules/react/index.js","./Header":"Pages/Header.js","./Jobs":"Pages/Jobs.js","../Components/SearchByLocationComponent":"Components/SearchByLocationComponent.js","./Search":"Pages/Search.js"}],"Components/JobDetailsComponents.js":[function(require,module,exports) {
 "use strict";
@@ -36551,7 +36569,7 @@ function JobDetailsComponents() {
   }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     className: "jobDetails_link",
     to: "/"
-  }, "Back to search"), /*#__PURE__*/_react.default.createElement("h2", {
+  }, "\u2190 Back to search"), /*#__PURE__*/_react.default.createElement("h2", {
     className: "jobDetails_heading"
   }, "How to apply"), /*#__PURE__*/_react.default.createElement("p", {
     className: "jobDetails_paragraph"
@@ -36577,7 +36595,7 @@ function JobDetailsComponents() {
     className: "job_location"
   }, jobDetails.location))), /*#__PURE__*/_react.default.createElement("div", {
     className: "jobDetails_description"
-  }, jobDetails.description)));
+  }, jobDetails.description, " ")));
 }
 },{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../GlobalContext":"GlobalContext.js","./Styles":"Components/Styles.js"}],"Pages/JobDetails.js":[function(require,module,exports) {
 "use strict";
@@ -36614,14 +36632,10 @@ var _Homepage = _interopRequireDefault(require("./Homepage"));
 
 var _JobDetails = _interopRequireDefault(require("./JobDetails"));
 
-var _Jobs = _interopRequireDefault(require("./Jobs"));
-
-var _Search = _interopRequireDefault(require("./Search"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function App() {
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactRouter.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouter.Route, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_reactRouter.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouter.Route, {
     exact: true,
     path: "/"
   }, /*#__PURE__*/_react.default.createElement(_Homepage.default, null)), /*#__PURE__*/_react.default.createElement(_reactRouter.Route, {
@@ -36629,7 +36643,7 @@ function App() {
     path: "/:jobId"
   }, /*#__PURE__*/_react.default.createElement(_JobDetails.default, null))));
 }
-},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","./Header":"Pages/Header.js","./Homepage":"Pages/Homepage.js","./JobDetails":"Pages/JobDetails.js","./Jobs":"Pages/Jobs.js","./Search":"Pages/Search.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","./Header":"Pages/Header.js","./Homepage":"Pages/Homepage.js","./JobDetails":"Pages/JobDetails.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -36673,7 +36687,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49973" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63267" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -20,10 +20,6 @@ h1, h2, h3, p {
     margin: 0;
 }
 
-img {
-    width: 100%;
-}
-
 a {
     text-decoration: none;
 }
@@ -76,5 +72,57 @@ pagination {
     background-repeat: no-repeat;
     border-radius: 8px;
 }
+
+img {
+    width: 100%;
+}
+
+@media(min-width: 1114px ) {
+    .homepage_section_container {
+            display: grid;
+            grid-template-columns: 25% auto;
+            column-gap: 32px;
+    }
+
+    .search_background {
+            grid-column: 1/3;
+    }
+
+    form.sc-dlfnbm.ljsDTj.option_form {
+        display: flex;
+        flex-direction: column;
+        grid-column: 1/2;
+        grid-row: 2;
+    }
+
+    .pagination {
+        justify-content: flex-end;
+    }
+
+    img {
+        width: 121px;
+        height: auto;
+    }
+
+    section.jobDetails_section {
+        display: grid;
+        grid-template-columns: 27% auto;
+        column-gap: 64px;
+    }
+
+    p.jobDetails_paragraph {
+        max-width: 231px;
+    }
+
+    .section_container__div {
+        position: relative;
+    }
+
+    .job_info {
+        position: absolute;
+        left: 90%;
+        transform: translateY(39px);
+    }
+ }
 
 /*# sourceMappingURL=/styles.8986bff4.css.map */

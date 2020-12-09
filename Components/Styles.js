@@ -15,6 +15,7 @@ export const Header = Styled.header`
     }
 `
 export const Job_Container = Styled.div`
+    display: flex;
     padding: 16px;
     margin-bottom: 16px;
     background: #FFFFFF;
@@ -23,7 +24,7 @@ export const Job_Container = Styled.div`
 
     .section_container__div {
         display: grid;
-        grid-template-columns: auto 75%;
+        grid-template-columns: 30% 67%;
         grid-gap: 32px;
     }
 
@@ -59,7 +60,7 @@ export const Job_Container = Styled.div`
         color: #334680;
         margin-top: 16px; 
         padding: 4px;
-        max-width: 25%;
+        max-width: 69px;
     }
 
     .job_info {
@@ -186,3 +187,4 @@ export const JobDetailArticle = Styled.article`
         height: 62px;
     }
 `
+

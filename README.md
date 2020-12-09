@@ -75,7 +75,7 @@ Template for your readme :
 Introduce your projects by taking a screenshot or a gif. Try to tell visitors a story about your project by answering:
 
 - My demo:
-The demo of my project can be seen by clicking [this netlify link](https://github-jobs-rinon.netlify.app/).
+The demo of my project can be seen by clicking [this netlify link](https://github-jobs-rinon.netlify.app).
 
 - My experience:
 I have solidified my knowledge about useReducer, using a few different fetches instead of working with one fetch for the whole project.

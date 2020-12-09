@@ -15,12 +15,12 @@ export default function JobDetailsComponents() {
     <section className = "jobDetails_section">
         <Article className="jobDetails_article" >
             <Link className="jobDetails_link" to='/'>
-            Back to search
-                 </Link>
-                <h2 className="jobDetails_heading">How to apply</h2>
-                <p className="jobDetails_paragraph">
-                    {jobDetails.how_to_apply}
-                </p>
+            ← Back to search
+            </Link>
+            <h2 className="jobDetails_heading">How to apply</h2>
+            <p className="jobDetails_paragraph">
+                {jobDetails.how_to_apply}
+            </p>
         </Article>
         <JobDetailArticle className="jobDetails_article">
             <header className="jobDetails_article__header">
@@ -36,7 +36,7 @@ export default function JobDetailsComponents() {
                 </div>
             </div>
             <div className="jobDetails_description">
-               {jobDetails.description}
+               {jobDetails.description}{" "}
             </div>
         </JobDetailArticle>
         </section >  

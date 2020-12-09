@@ -7,7 +7,8 @@ export default function Reducer() {
                 return {
                     ...state,
                     loading: action.loading,
-                    jobs: action.jobsData
+                    jobs: action.jobsData,
+                    paginationHidden: action.isPaginationHidden
                 }
             }
             case "SET_DESCRIPTION": {
@@ -36,6 +37,7 @@ export default function Reducer() {
     }, {
         jobs: [],
         loading: true,
+        paginationHidden: true,
         description: "",
         location: "",
         fulltime: false,
@@ -49,7 +51,7 @@ export default function Reducer() {
         const response = await fetch(endpoint);
         const data = await response.json();
         setPageCount(Math.ceil(data.length / perPage))
-        dispatch({ type: "SET_JOBS", jobsData: data, loading: false })
+        dispatch({ type: "SET_JOBS", jobsData: data, loading: false, isPaginationHidden: false })
     }
 
     return { state, dispatch, perPage, pageCount, setPageCount, fetchJobs };

@@ -2,13 +2,12 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import Header from './Header';
 import Homepage from './Homepage';
-import JobDetails from './JobDetails';
-import Jobs from './Jobs';
-import Search from './Search';
+import JobDetails from './JobDetails'; 
 
 export default function App() {
     return (
         <div>  
+            <Header />
             <Switch>
                 <Route exact path="/">
                   <Homepage />

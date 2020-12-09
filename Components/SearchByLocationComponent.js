@@ -21,7 +21,7 @@ export default function SearchByLocationComponent() {
             <label htmlFor="fulltime">
                 <input onChange={searchJobsByLocation}
                     type="checkbox" id="full-time" />
-                <span>Full time</span>
+                    <span>Full time</span>
             </label>
             <label htmlFor="location">Location:</label>
             <input

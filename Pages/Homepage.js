@@ -8,10 +8,12 @@ import Search from './Search';
 export default function HomepageComponent() {
     return (
         <section className="page_section homepage_section">
-            <Header />
-            <Search />
-            <SearchByLocationComponent />
-            <Jobs/>
+            {/* <Header /> */}
+            <div className="homepage_section_container">
+                <Search />
+                <SearchByLocationComponent />
+                <Jobs/>
+            </div>
         </section>
     )
 }

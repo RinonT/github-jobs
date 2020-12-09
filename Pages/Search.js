@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchFormComponent from '../Components/SearchFormComponent'
+import SearchFormComponent from '../Components/SearchByKeywordComponent'
  
 
 export default function Search() {

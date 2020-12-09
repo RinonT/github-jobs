@@ -10,7 +10,6 @@ export default function SearchFormComponent() {
         const descriptionSearchInput = e.target.description;
         dispatch({ type: "SET_JOBS", jobsData: [], loading: true})
         dispatch({type: "SET_DESCRIPTION", description: descriptionSearchInput.value})
-        descriptionSearchInput.value = "";
     }
 
     return (

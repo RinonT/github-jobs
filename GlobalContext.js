@@ -10,8 +10,11 @@ function GlobalContext({ children }) {
   let {jobs, loading, description, location, fulltime } = state;
   const [offset, setOffset] = useState(0);
   
-  // Fetch all jobs
-  let allJobsEndpoint = PROXI_URL + API_URL;
+  // Fetch jobs
+let allJobsEndpoint = PROXI_URL + API_URL;
+
+// Change the endpoint depending on the search.
+//  At the begining, it will fetch all works
 
 if(description !== "" ) {
   allJobsEndpoint = allJobsEndpoint + `description=${description}`;
