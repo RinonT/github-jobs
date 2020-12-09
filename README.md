@@ -41,15 +41,15 @@ Template for your readme :
 
 <!-- Please update value in the {}  -->
 
-<h1 align="center">{Your project name}</h1>
+<h1 align="center">Github Jobs</h1>
 
 <div align="center">
   <h3>
-    <a href="https://{your-demo-link.your-domain}">
+    <a href="https://github-jobs-rinon.netlify.app/">
       Demo
     </a>
     <span> | </span>
-    <a href="https://{your-url-to-the-solution}">
+    <a href="https://github.com/ganamavo/github-jobs">
       Solution
     </a>
   </h3>
@@ -74,13 +74,27 @@ Template for your readme :
 
 Introduce your projects by taking a screenshot or a gif. Try to tell visitors a story about your project by answering:
 
--   Where can I see your demo?
--   What was your experience?
--   In a few sentences, explain the structure of your project.
--   If you had more time, what area of your project would you improve?
--   Did you learn anything new while working on this project?
--   What was the most challenging part for you?
--   Any other comments?
+- My demo:
+The demo of my project can be seen by clicking [this netlify link](https://github-jobs-rinon.netlify.app/).
+
+- My experience:
+I have solidified my knowledge about useReducer, using a few different fetches instead of working with one fetch for the whole project.
+
+- The structure of this project:
+ - There are two different context files: one is for the reducer which I named **Reducer** and the **GlobalContext** is providing context to all files.
+
+ - The **Components** folder contains all the components files needed for the **Pages**. That means I have two folders: one is a component folder and the other one is the page folder.
+
+ - I didn't use any filter method but instead, I did different fetches for the searching jobs, which you can see in the *Reducer* and *GlobalContext* files.
+
+-   If I had more time, I would make my code much cleaner and spend more time on the styles. Finishing what I couldn't finish.
+
+- What I have learned is still about using useEffect, using using reducer and also, manupilating api urls. But something new? Pagination in react that is amazing.
+
+- The most challenging part for me is first waiting for the data from the serve which is very slow. Working with the html in the description's value.
+
+- Comment:
+This is a delicious project. Challenging but enjoyable. Thank you very much.
 
 
 
