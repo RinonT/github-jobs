@@ -36245,7 +36245,7 @@ function JobsComponents({
 
   const Difference_In_Time = date4.getTime() - date3.getTime(); // To calculate the no. of days between two dates 
 
-  const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24) + ` days ago`;
+  const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   return /*#__PURE__*/_react.default.createElement("section", {
     className: "page_section"
   }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
@@ -36271,10 +36271,10 @@ function JobsComponents({
     className: "job_location"
   }, location), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
     src: "",
-    alt: "jobs"
+    alt: true
   }), /*#__PURE__*/_react.default.createElement("span", {
     className: "job_created"
-  }, Difference_In_Days))))));
+  }, Difference_In_Days < 2 ? Difference_In_Days + ` day ago` : Difference_In_Days + ` days ago`))))));
 }
 },{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./Styles":"Components/Styles.js"}],"Pages/Jobs.js":[function(require,module,exports) {
 "use strict";
@@ -36560,6 +36560,10 @@ function JobDetailsComponents() {
     jobs
   } = state;
   const jobDetails = jobs.length > 0 && jobs.find(job => job.id === jobId);
+  const jobDate = new Date(jobDetails.created_at);
+  const today = new Date(Date.now());
+  const differenceInDate = today.getTime() - jobDate.getTime();
+  const numberOfDays = Math.round(differenceInDate / (1000 * 3600 * 24));
   return /*#__PURE__*/_react.default.createElement("section", {
     className: "jobDetails_section"
   }, /*#__PURE__*/_react.default.createElement(_Styles.Article, {
@@ -36571,8 +36575,11 @@ function JobDetailsComponents() {
     className: "jobDetails_heading"
   }, "How to apply"), /*#__PURE__*/_react.default.createElement("p", {
     className: "jobDetails_paragraph",
-    id: "apply"
-  }, jobDetails.how_to_apply)), /*#__PURE__*/_react.default.createElement(_Styles.JobDetailArticle, {
+    id: "apply",
+    dangerouslySetInnerHTML: {
+      __html: jobDetails.how_to_apply
+    }
+  })), /*#__PURE__*/_react.default.createElement(_Styles.JobDetailArticle, {
     className: "jobDetails_article"
   }, /*#__PURE__*/_react.default.createElement("header", {
     className: "jobDetails_article__header"
@@ -36582,7 +36589,7 @@ function JobDetailsComponents() {
     className: "jobDetails__paragraph job_type"
   }, jobDetails.type), /*#__PURE__*/_react.default.createElement("span", {
     className: "jobDetails__paragraph job_date"
-  }, jobDetails.created_at)), /*#__PURE__*/_react.default.createElement("div", {
+  }, numberOfDays === 1 ? numberOfDays + " " + 'day' : numberOfDays + " " + 'days', " ago ")), /*#__PURE__*/_react.default.createElement("div", {
     className: "job_info_container"
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: jobDetails.company_logo
@@ -36593,8 +36600,11 @@ function JobDetailsComponents() {
   }, jobDetails.company), /*#__PURE__*/_react.default.createElement("span", {
     className: "job_location"
   }, jobDetails.location))), /*#__PURE__*/_react.default.createElement("div", {
-    className: "jobDetails_description"
-  }, jobDetails.description)));
+    className: "jobDetails_description",
+    dangerouslySetInnerHTML: {
+      __html: jobDetails.description
+    }
+  })));
 }
 },{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../GlobalContext":"GlobalContext.js","./Styles":"Components/Styles.js"}],"Pages/JobDetails.js":[function(require,module,exports) {
 "use strict";
@@ -36686,7 +36696,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63267" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51818" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

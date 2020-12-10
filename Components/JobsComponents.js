@@ -18,7 +18,7 @@ const discussedOnDate = new Date(Number(date1));
  const Difference_In_Time = date4.getTime() - date3.getTime(); 
    
  // To calculate the no. of days between two dates 
- const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24) + ` days ago`; 
+ const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
    
     return (
         <section className="page_section">
@@ -34,9 +34,9 @@ const discussedOnDate = new Date(Number(date1));
                     </div>
                     <div className="job_info">
                         <p className="job_location">{location}</p>
-                        <div>
-                            <img src="" alt="jobs" />
-                            <span className="job_created">{Difference_In_Days}</span>
+                        <div> 
+                            <img src="" alt=""/>
+                            <span className="job_created">{Difference_In_Days < 2 ? Difference_In_Days + ` day ago` : Difference_In_Days + ` days ago`}</span>
                         </div>
                     </div>
                 </Job_Container> 
