@@ -7,8 +7,8 @@ export default function HeaderComponents() {
             <div className="page_container header_container">
                 <h1>
                     <span>GithBub </span>
-                     Jobs
-                     </h1>
+                    Jobs
+                </h1>
             </div>
         </Header>
     )

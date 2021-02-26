@@ -36271,7 +36271,7 @@ function JobsComponents({
     className: "job_location"
   }, location), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
     src: "",
-    alt: true
+    alt: ""
   }), /*#__PURE__*/_react.default.createElement("span", {
     className: "job_created"
   }, Difference_In_Days < 2 ? Difference_In_Days + ` day ago` : Difference_In_Days + ` days ago`))))));
@@ -36696,7 +36696,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51818" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49965" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
