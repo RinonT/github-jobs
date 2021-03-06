@@ -1,8 +1,9 @@
 # Github Jobs
 
-Here we are, the last graded project of this semester.
+Creating a job search using an API, and using React to handle the frontend.
 
-Your challenge: Create a job search using an API, and use React to handle the frontend. Don’t look at the existing solution. Fulfill user stories below:
+Building a website that displays all of the possible jobs open for everyone by fetching data from the github jobs data.
+ 
 
 ![image](./assets/1.png)
 ![image](./assets/2.png)
@@ -19,25 +20,17 @@ Your challenge: Create a job search using an API, and use React to handle the fr
 - User story (optional): I can see a list of jobs in the closest city from my location by default
 - User story (optional): I can see jobs in different pages, 5 items each page
 
-You’ll also have to apply a few concept we learned in class, such as a **reducer** and a global **context**. And there will be a bonus for those who can find a use case for a **compound component**.
+Applying a few concept we learned in class, such as a **reducer** and a global **context**.
 
 **Icon**: https://google.github.io/material-design-icons/ (you can also use the react-icons package)
 
 **API**: https://jobs.github.com/api. Use data from the API to create questions and answers.
-
-*If you get some CORS errors, you can use https://cors-anywhere.herokuapp.com/ to help with accessing data from other websites that are normally forbidden by the same-origin policy of web browsers*
-
+ 
 **Design** : https://www.figma.com/file/gAkVx9CdOqnJcCjJ7nVNkw
 
 **Live app** : https://jolly-heisenberg-20c49e.netlify.app/
-
-Once you completed, polish a nice readme submit your solutions on this link : https://forms.gle/Xg6kJMKmrBkyTe3TA, by providing URLs for both GitHub repository and live app on Netlify.
-
-For the custom domain url you'll enter in netlify, please use the following naming convention : **github-jobs-_YOUR_FIRSTNAME_.netlify.app** (replace YOUR_FIRSTNAME by your firstname)
-
-Good luck everybody!
-
-Template for your readme :
+ 
+Template for readme :
 
 <!-- Please update value in the {}  -->
 
